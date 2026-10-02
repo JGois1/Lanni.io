@@ -1,0 +1,5 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/Lanni.Api/Lanni.Api.csproj" />
+  </Folder>
+</Solution>

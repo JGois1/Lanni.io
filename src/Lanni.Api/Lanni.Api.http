@@ -1,0 +1,6 @@
+@Lanni.Api_HostAddress = http://localhost:5156
+
+GET {{Lanni.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
