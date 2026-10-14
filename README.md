@@ -1,6 +1,6 @@
-# Lanni.io 🦁
+# Lanni.io 
 
-> A C# .NET API that ensures your group always pays its debts.
+> A C# .NET API that ensures your group always pays its debts 🦁
 
 Lanni.io is an expense-splitting API (think Splitwise) built as a hands-on lab to learn the .NET ecosystem in depth: ASP.NET Core, Entity Framework Core, Dapper, async programming, messaging, Docker and cloud deployment.
 
