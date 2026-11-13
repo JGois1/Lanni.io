@@ -79,6 +79,70 @@ public class GruposController : ControllerBase
             new ParticipanteResponse(participante.Id, participante.Nome));
     }
 
+    [HttpPost("{id:guid}/despesas")]
+    public async Task<ActionResult<DespesaResponse>> AdicionarDespesa(
+        Guid id, AdicionarDespesaRequest request, CancellationToken ct)
+    {
+        var grupo = await _db.Grupos
+            .Include(g => g.Participantes)
+            .FirstOrDefaultAsync(g => g.Id == id, ct);
+
+        if (grupo is null)
+            return NotFound();
+
+        Despesa despesa;
+        try
+        {
+            despesa = grupo.AdicionarDespesa(request.PagadorId, request.Descricao, request.Valor, request.ParticipanteIds);
+        }
+        catch (ArgumentException ex)
+        {
+            return BadRequest(new { erro = ex.Message });
+        }
+
+        await _db.SaveChangesAsync(ct);
+
+        return CreatedAtAction(
+            nameof(ObterPorId),
+            new { id = grupo.Id },
+            new DespesaResponse(
+                despesa.Id,
+                despesa.PagadorId,
+                despesa.Descricao,
+                despesa.Valor,
+                despesa.Data,
+                despesa.Divisoes.Select(d => new DivisaoResponse(d.ParticipanteId, d.Valor)).ToList()));
+    }
+
+    [HttpPost("{id:guid}/acertos")]
+    public async Task<ActionResult<AcertoResponse>> RegistrarAcerto(
+        Guid id, RegistrarAcertoRequest request, CancellationToken ct)
+    {
+        var grupo = await _db.Grupos
+            .Include(g => g.Participantes)
+            .FirstOrDefaultAsync(g => g.Id == id, ct);
+
+        if (grupo is null)
+            return NotFound();
+
+        Acerto acerto;
+        try
+        {
+            acerto = grupo.RegistrarAcerto(request.DeId, request.ParaId, request.Valor);
+        }
+        catch (ArgumentException ex)
+        {
+            return BadRequest(new { erro = ex.Message });
+        }
+
+        await _db.SaveChangesAsync(ct);
+
+        return CreatedAtAction(
+            nameof(ObterPorId),
+            new { id = grupo.Id },
+            new AcertoResponse(acerto.Id, acerto.DeId, acerto.ParaId, acerto.Valor, acerto.Data));
+    }
+
     private static GrupoResponse ParaResponse(Grupo g) => new(
         g.Id,
         g.Nome,

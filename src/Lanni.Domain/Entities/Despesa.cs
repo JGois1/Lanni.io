@@ -19,8 +19,14 @@ public class Despesa
     {
         if (valor <= 0)
             throw new ArgumentException("O valor da despesa deve ser maior que zero.");
+        if (decimal.Round(valor, 2) != valor)
+            throw new ArgumentException("O valor da despesa pode ter no máximo 2 casas decimais.");
         if (string.IsNullOrWhiteSpace(descricao))
             throw new ArgumentException("A descrição é obrigatória.");
+
+        descricao = descricao.Trim();
+        if (descricao.Length > 200)
+            throw new ArgumentException("A descrição pode ter no máximo 200 caracteres.");
 
         GrupoId = grupoId;
         PagadorId = pagadorId;

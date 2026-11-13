@@ -5,4 +5,7 @@
     <Project Path="src/Lanni.Domain/Lanni.Domain.csproj" />
     <Project Path="src/Lanni.Infrastructure/Lanni.Infrastructure.csproj" />
   </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/Lanni.Domain.Tests/Lanni.Domain.Tests.csproj" />
+  </Folder>
 </Solution>

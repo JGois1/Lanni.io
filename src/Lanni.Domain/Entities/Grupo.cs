@@ -38,4 +38,45 @@ public class Grupo
         _participantes.Add(participante);
         return participante;
     }
+
+    public Despesa AdicionarDespesa(Guid pagadorId, string descricao, decimal valor, IReadOnlyList<Guid> participanteIds)
+    {
+        if (_participantes.All(p => p.Id != pagadorId))
+            throw new ArgumentException("O pagador não pertence a este grupo.");
+        if (participanteIds.Count == 0)
+            throw new ArgumentException("Informe ao menos um participante para dividir a despesa.");
+        if (participanteIds.Distinct().Count() != participanteIds.Count)
+            throw new ArgumentException("Há participantes repetidos na divisão.");
+        if (participanteIds.Any(id => _participantes.All(p => p.Id != id)))
+            throw new ArgumentException("Há participantes na divisão que não pertencem a este grupo.");
+
+        var despesa = new Despesa(Id, pagadorId, descricao, valor);
+
+        // Divide em centavos para baixo; o centavo que sobra fica com o último (100 / 3 = 33,33 + 33,33 + 33,34).
+        var parte = Math.Floor(valor / participanteIds.Count * 100) / 100;
+        var resto = valor - parte * participanteIds.Count;
+
+        for (var i = 0; i < participanteIds.Count; i++)
+        {
+            despesa.Divisoes.Add(new DivisaoDespesa
+            {
+                DespesaId = despesa.Id,
+                ParticipanteId = participanteIds[i],
+                Valor = i == participanteIds.Count - 1 ? parte + resto : parte
+            });
+        }
+
+        _despesas.Add(despesa);
+        return despesa;
+    }
+
+    public Acerto RegistrarAcerto(Guid deId, Guid paraId, decimal valor)
+    {
+        if (_participantes.All(p => p.Id != deId) || _participantes.All(p => p.Id != paraId))
+            throw new ArgumentException("Os participantes do acerto precisam pertencer a este grupo.");
+
+        var acerto = new Acerto(Id, deId, paraId, valor);
+        _acertos.Add(acerto);
+        return acerto;
+    }
 }

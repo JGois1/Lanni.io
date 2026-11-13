@@ -4,7 +4,7 @@
 
 Lanni.io is an expense-splitting API (think Splitwise) built as a hands-on lab to learn the .NET ecosystem in depth: ASP.NET Core, Entity Framework Core, Dapper, async programming, messaging, Docker and cloud deployment.
 
-> 🚧 **Status:** under construction. Currently in **Phase 2** (modeling + EF Core).
+> 🚧 **Status:** under construction. Currently in **Phase 3** (business rules).
 
 ---
 
@@ -38,12 +38,15 @@ Each one is used where it is strongest. **EF Core** handles writes, transactions
 ## Roadmap
 
 - [x] **Phase 1 – Foundation:** solution, Web API, OpenAPI + Swagger UI, Git
-- [ ] **Phase 2 – Modeling + EF Core:** entities, `DbContext`, migrations, SQL Server in Docker
+- [x] **Phase 2 – Modeling + EF Core:** entities, `DbContext`, migrations, SQL Server in Docker
   - [x] Domain entities (Guid v7 ids)
-  - [ ] Infrastructure project + `DbContext`
-  - [ ] Entity configuration (decimal precision, relationships)
-  - [ ] First migration
+  - [x] Infrastructure project + `DbContext`
+  - [x] Entity configuration (decimal precision, relationships)
+  - [x] First migration
 - [ ] **Phase 3 – Business rules:** groups, participants, expenses with equal split, DTOs and validation
+  - [x] Groups and participants endpoints
+  - [x] Expenses with equal split (lost cent goes to the last participant)
+  - [x] Settlements
 - [ ] **Phase 4 – Dapper:** balances and statements
 - [ ] **Phase 5 – Debt simplification algorithm:** pure, testable logic
 - [ ] **Phase 6 – Docker + AWS:** containerize the API and deploy
@@ -70,7 +73,9 @@ Lanni.io/
 └── src/
     ├── Lanni.Api/              # Controllers, Program.cs, OpenAPI/Swagger
     ├── Lanni.Domain/           # Entities (no EF dependency)
-    └── Lanni.Infrastructure/   # DbContext, migrations (coming in Phase 2)
+    └── Lanni.Infrastructure/   # DbContext, entity configurations, migrations
+└── tests/
+    └── Lanni.Domain.Tests/     # xUnit tests for domain rules
 ```
 
 ## Getting started

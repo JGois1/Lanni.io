@@ -1,6 +1,44 @@
 @Lanni.Api_HostAddress = http://localhost:5156
+# Preencha com os ids retornados pelas chamadas anteriores.
+@grupoId = 00000000-0000-0000-0000-000000000000
+@p1 = 00000000-0000-0000-0000-000000000000
+@p2 = 00000000-0000-0000-0000-000000000000
+@p3 = 00000000-0000-0000-0000-000000000000
 
-GET {{Lanni.Api_HostAddress}}/weatherforecast/
+POST {{Lanni.Api_HostAddress}}/api/grupos
+Content-Type: application/json
+
+{ "nome": "Viagem" }
+
+###
+
+POST {{Lanni.Api_HostAddress}}/api/grupos/{{grupoId}}/participantes
+Content-Type: application/json
+
+{ "nome": "Ana" }
+
+###
+
+GET {{Lanni.Api_HostAddress}}/api/grupos/{{grupoId}}
 Accept: application/json
+
+###
+
+POST {{Lanni.Api_HostAddress}}/api/grupos/{{grupoId}}/despesas
+Content-Type: application/json
+
+{
+  "pagadorId": "{{p1}}",
+  "descricao": "Jantar",
+  "valor": 100,
+  "participanteIds": ["{{p1}}", "{{p2}}", "{{p3}}"]
+}
+
+###
+
+POST {{Lanni.Api_HostAddress}}/api/grupos/{{grupoId}}/acertos
+Content-Type: application/json
+
+{ "deId": "{{p2}}", "paraId": "{{p1}}", "valor": 33.33 }
 
 ###
