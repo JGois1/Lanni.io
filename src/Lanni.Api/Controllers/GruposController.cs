@@ -154,6 +154,15 @@ public class GruposController : ControllerBase
         return Ok(await _db.ObterSaldosAsync(id, ct));
     }
 
+    [HttpGet("{id:guid}/extrato")]
+    public async Task<ActionResult<IReadOnlyList<MovimentoExtrato>>> ObterExtrato(Guid id, CancellationToken ct)
+    {
+        if (!await _db.Grupos.AnyAsync(g => g.Id == id, ct))
+            return NotFound();
+
+        return Ok(await _db.ObterExtratoAsync(id, ct));
+    }
+
     [HttpGet("{id:guid}/transferencias")]
     public async Task<ActionResult<IReadOnlyList<TransferenciaResponse>>> ObterTransferencias(Guid id, CancellationToken ct)
     {

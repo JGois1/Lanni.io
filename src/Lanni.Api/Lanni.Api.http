@@ -52,3 +52,8 @@ GET {{Lanni.Api_HostAddress}}/api/grupos/{{grupoId}}/transferencias
 Accept: application/json
 
 ###
+
+GET {{Lanni.Api_HostAddress}}/api/grupos/{{grupoId}}/extrato
+Accept: application/json
+
+###

@@ -4,7 +4,7 @@
 
 Lanni.io is an expense-splitting API (think Splitwise) built as a hands-on lab to learn the .NET ecosystem in depth: ASP.NET Core, Entity Framework Core, Dapper, async programming, messaging, Docker and cloud deployment.
 
-> 🚧 **Status:** under construction. Currently in **Phase 4** (Dapper reads).
+> 🚧 **Status:** under construction. Currently in **Phase 6** (Docker + AWS).
 
 ---
 
@@ -47,9 +47,9 @@ Each one is used where it is strongest. **EF Core** handles writes, transactions
   - [x] Groups and participants endpoints
   - [x] Expenses with equal split (lost cent goes to the last participant)
   - [x] Settlements
-- [ ] **Phase 4 – Dapper:** balances and statements
+- [x] **Phase 4 – Dapper:** balances and statements
   - [x] Balances per participant (`GET /api/grupos/{id}/saldos`)
-  - [ ] Statements
+  - [x] Statements (`GET /api/grupos/{id}/extrato`)
 - [x] **Phase 5 – Debt simplification algorithm:** pure, testable logic (`GET /api/grupos/{id}/transferencias`)
 - [ ] **Phase 6 – Docker + AWS:** containerize the API and deploy
 - [ ] **Phase 7 – Messaging (optional):** `ExpenseCreated` event + consumer
