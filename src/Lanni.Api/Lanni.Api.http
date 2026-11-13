@@ -42,3 +42,8 @@ Content-Type: application/json
 { "deId": "{{p2}}", "paraId": "{{p1}}", "valor": 33.33 }
 
 ###
+
+GET {{Lanni.Api_HostAddress}}/api/grupos/{{grupoId}}/saldos
+Accept: application/json
+
+###

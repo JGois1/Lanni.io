@@ -1,6 +1,7 @@
 using Lanni.Api.Contracts;
 using Lanni.Domain.Entities;
 using Lanni.Infrastructure;
+using Lanni.Infrastructure.Queries;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -141,6 +142,15 @@ public class GruposController : ControllerBase
             nameof(ObterPorId),
             new { id = grupo.Id },
             new AcertoResponse(acerto.Id, acerto.DeId, acerto.ParaId, acerto.Valor, acerto.Data));
+    }
+
+    [HttpGet("{id:guid}/saldos")]
+    public async Task<ActionResult<IReadOnlyList<SaldoParticipante>>> ObterSaldos(Guid id, CancellationToken ct)
+    {
+        if (!await _db.Grupos.AnyAsync(g => g.Id == id, ct))
+            return NotFound();
+
+        return Ok(await _db.ObterSaldosAsync(id, ct));
     }
 
     private static GrupoResponse ParaResponse(Grupo g) => new(
