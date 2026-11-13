@@ -50,7 +50,7 @@ Each one is used where it is strongest. **EF Core** handles writes, transactions
 - [ ] **Phase 4 – Dapper:** balances and statements
   - [x] Balances per participant (`GET /api/grupos/{id}/saldos`)
   - [ ] Statements
-- [ ] **Phase 5 – Debt simplification algorithm:** pure, testable logic
+- [x] **Phase 5 – Debt simplification algorithm:** pure, testable logic (`GET /api/grupos/{id}/transferencias`)
 - [ ] **Phase 6 – Docker + AWS:** containerize the API and deploy
 - [ ] **Phase 7 – Messaging (optional):** `ExpenseCreated` event + consumer
 - [ ] **Later:** Angular front end, authentication

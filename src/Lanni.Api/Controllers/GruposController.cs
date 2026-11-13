@@ -1,5 +1,6 @@
 using Lanni.Api.Contracts;
 using Lanni.Domain.Entities;
+using Lanni.Domain.Services;
 using Lanni.Infrastructure;
 using Lanni.Infrastructure.Queries;
 using Microsoft.AspNetCore.Mvc;
@@ -151,6 +152,20 @@ public class GruposController : ControllerBase
             return NotFound();
 
         return Ok(await _db.ObterSaldosAsync(id, ct));
+    }
+
+    [HttpGet("{id:guid}/transferencias")]
+    public async Task<ActionResult<IReadOnlyList<TransferenciaResponse>>> ObterTransferencias(Guid id, CancellationToken ct)
+    {
+        if (!await _db.Grupos.AnyAsync(g => g.Id == id, ct))
+            return NotFound();
+
+        var saldos = await _db.ObterSaldosAsync(id, ct);
+        var nomes = saldos.ToDictionary(s => s.ParticipanteId, s => s.Nome);
+
+        return Ok(SimplificadorDividas.Simplificar(saldos.Select(s => (s.ParticipanteId, s.Saldo)))
+            .Select(t => new TransferenciaResponse(t.DeId, nomes[t.DeId], t.ParaId, nomes[t.ParaId], t.Valor))
+            .ToList());
     }
 
     private static GrupoResponse ParaResponse(Grupo g) => new(

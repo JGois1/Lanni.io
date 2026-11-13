@@ -47,3 +47,8 @@ GET {{Lanni.Api_HostAddress}}/api/grupos/{{grupoId}}/saldos
 Accept: application/json
 
 ###
+
+GET {{Lanni.Api_HostAddress}}/api/grupos/{{grupoId}}/transferencias
+Accept: application/json
+
+###

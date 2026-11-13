@@ -12,6 +12,8 @@ public record RegistrarAcertoRequest(Guid DeId, Guid ParaId, decimal Valor);
 
 public record AcertoResponse(Guid Id, Guid DeId, Guid ParaId, decimal Valor, DateTime Data);
 
+public record TransferenciaResponse(Guid DeId, string DeNome, Guid ParaId, string ParaNome, decimal Valor);
+
 public record DivisaoResponse(Guid ParticipanteId, decimal Valor);
 
 public record DespesaResponse(
