@@ -482,3 +482,5 @@ $RECYCLE.BIN/
 *.swp
 
 .env
+# Claude Code (local)
+.claude/
